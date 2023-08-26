@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/banq_data
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: pgadmin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  security:
+    jwt:
+      secret-keys: Xzn9qZNjdUloA91867Qi2j4rR1EmqOcr/2glQMgcZVwj2tjOB8xq69C7FaDeR5tWed2+u2a2/NdhgxUxWDOQUx7BvQZsp15P6SR+Bw41YS4GsxuJx+kSb68M4kbFpI0reCG89wda8XSCHN2lmCZKHQnA60q48bNJJ6HC9Z1PDklx5wKLrF+pTb5yobxCQsKWE1QBy+ErsHkR+OU75l4LHIHvqkWKykfWaEzIIWUKMk3+utHIMEs2pZ6BlCTUlbz2CHwcFcheVpANaRX8PZDqyZcZCZBAUdFQRwZBc0zuFAZjdW+NW429vQzvn7pOr0baD/ggqcZ9nJC/NFI7yDzFisQ1PVN6WrfWyRfLCweIoec=
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 60000 # 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
