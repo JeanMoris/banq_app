@@ -2,6 +2,7 @@ package com.jlm.banq.controllers;
 
 import com.jlm.banq.dto.ContactDto;
 import com.jlm.banq.services.ContactService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/contacts")
+@Tag(name = "contacts")
 public class ContactController {
 
     private final ContactService service ;

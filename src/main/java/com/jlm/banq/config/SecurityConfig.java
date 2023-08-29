@@ -38,8 +38,9 @@ public class SecurityConfig {
                         {
                             try {
                                 request.requestMatchers(
+                                                "**/authenticate",
                                                 "/auth/**",
-                                                "/register/**",
+                                                "**/register",
                                                 "/api/access/**",
                                                 "/h2-console/**",
                                                 // resources for swagger to work properly

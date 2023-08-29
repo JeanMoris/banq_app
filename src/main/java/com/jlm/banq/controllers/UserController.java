@@ -2,6 +2,7 @@ package com.jlm.banq.controllers;
 
 import com.jlm.banq.dto.UserDto;
 import com.jlm.banq.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Tag(name = "user")
 public class UserController {
 
     private final UserService service ;
