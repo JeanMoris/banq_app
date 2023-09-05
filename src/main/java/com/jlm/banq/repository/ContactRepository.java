@@ -11,4 +11,6 @@ import java.util.List;
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
   List<Contact> findAllByUserId(Integer userId);
+
+  boolean existsByIban(String iban) ;
 }

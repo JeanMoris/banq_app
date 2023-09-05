@@ -34,6 +34,10 @@ public class UserDto {
     @NotBlank(message = "Le mot de passe ne doit pas être vide")
     @Size(min = 8, max = 16, message = "Le mot de passe doit être entre 8 et 16 caracteres")
     private String password ;
+
+    private String iban ;
+
+    private boolean active ;
     
 
     public static UserDto fromEntity(User user) {
@@ -44,6 +48,8 @@ public class UserDto {
                 .lastname(user.getLastname())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .iban(user.getAccount() == null ? "" : user.getAccount().getIban())
+                .active(user.isActive())
                 .build() ;
     }
 

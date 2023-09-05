@@ -3,6 +3,9 @@ package com.jlm.banq.dto;
 import com.jlm.banq.models.Transaction;
 import com.jlm.banq.models.TransactionType;
 import com.jlm.banq.models.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +23,10 @@ public class TransactionDto {
 
     private Integer id;
 
-    @Positive
+    @Positive(message = "Le montant doit être positif")
+    @NotNull(message = "Veuillez entrer un montant")
     private BigDecimal amount;
-
+    @NotNull(message = "Veuillez selectionner un type de transaction")
     private TransactionType type;
 
     private String destinationIban;
