@@ -3,18 +3,21 @@ package com.jlm.banq.handlers;
 import com.jlm.banq.exceptions.ObjectValidationException;
 import com.jlm.banq.exceptions.OperationNonPermittedException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springdoc.api.ErrorMessage;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ObjectValidationException.class)
-    public ResponseEntity<ExceptionRepresentation> handleException(ObjectValidationException exception) {
+    public ResponseEntity<ExceptionRepresentation> handleExceptionObject(ObjectValidationException exception) {
         ExceptionRepresentation representation = ExceptionRepresentation.builder()
                 .errorMessage("Object not valid exception has occurred")
                 .errorSource(exception.getViolationSource())
@@ -72,5 +75,28 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.FORBIDDEN)
                 .body(representation);
     }
+
+    @ExceptionHandler(IbanAlreadyExistsException.class)
+    public ResponseEntity<ExceptionRepresentation> handleIbanAlreadyExistsException(IbanAlreadyExistsException exception) {
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .errorMessage(exception.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(representation);
+    }
+
+   /* @ExceptionHandler({ObjectValidationException.class, IbanAlreadyExistsException.class})
+    public ResponseEntity<ExceptionRepresentation> handleExceptions(Exception exception) {
+        if (exception instanceof ObjectValidationException) {
+            return handleExceptionObject  ((ObjectValidationException) exception);
+        } else if (exception instanceof IbanAlreadyExistsException) {
+            return handleIbanAlreadyExistsException((IbanAlreadyExistsException) exception);
+        } else {
+            // Handle other exceptions or fallback scenario
+            return null;
+        }
+    }*/
+
 
 }

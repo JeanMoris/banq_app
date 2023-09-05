@@ -2,12 +2,15 @@ package com.jlm.banq.services.impl;
 
 import com.jlm.banq.dto.AddressDto;
 import com.jlm.banq.dto.ContactDto;
+import com.jlm.banq.handlers.IbanAlreadyExistsException;
 import com.jlm.banq.models.Contact;
 import com.jlm.banq.repository.ContactRepository;
 import com.jlm.banq.services.ContactService;
 import com.jlm.banq.validators.ObjectsValidator;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +22,13 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactRepository repository ;
 
-    private ObjectsValidator<ContactDto> validator ;
+    private final ObjectsValidator<ContactDto> validator ;
     @Override
     public Integer save(ContactDto dto) {
         validator.validate(dto);
+        if (repository.existsByIban(dto.getIban())) {
+            throw new IbanAlreadyExistsException("L'IBAN " + dto.getIban() + " existe déjà.");
+        }
         Contact contact = ContactDto.toEntity(dto);
         return repository.save(contact).getId();
     }

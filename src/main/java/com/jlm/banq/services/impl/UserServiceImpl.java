@@ -3,6 +3,7 @@ package com.jlm.banq.services.impl;
 import com.jlm.banq.config.JwtUtils;
 import com.jlm.banq.dto.*;
 import com.jlm.banq.exceptions.OperationNonPermittedException;
+import com.jlm.banq.models.Account;
 import com.jlm.banq.models.Role;
 import com.jlm.banq.models.User;
 import com.jlm.banq.repository.RoleRepository;
@@ -78,19 +79,19 @@ public class UserServiceImpl implements UserService {
             );
         }
 
+        user.setActive(true);
+
         if (user.getAccount() == null) {
             // Create a new account and associate it with the user
             AccountDto account = AccountDto.builder()
                     .user(UserDto.fromEntity(user))
                     .build();
-            accountService.save(account);
-        } else {
-            throw new OperationNonPermittedException(
-                    "The selected user already has an account",
-                    "Validate account",
-                    "Account service",
-                    "Account validation"
-            );
+          var savedAccount =  accountService.save(account);
+          user.setAccount(
+                  Account.builder()
+                          .id(savedAccount)
+                          .build()
+          );
         }
 
         // Activate the user
